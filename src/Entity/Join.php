@@ -30,6 +30,10 @@ class Join
      */
     private $participant;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     public function getArdoise(): ?ardoise
     {
