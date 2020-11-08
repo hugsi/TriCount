@@ -1,0 +1,10 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h1>Ajouter une ardoise</h1>
+    {{ form(formulaire) }}
+
+
+
+    <a class="btn btn-warning" href="{{ path("ardoises") }}">&lt; retour à la liste </a>
+{% endblock %}

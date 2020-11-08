@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <h1>Voulez-vous vraiment supprimer la catégorie {{ categories.nom }} ?</h1>
+    <h1>Voulez-vous vraiment supprimer l'ardoise {{ ardoises.nom }} ?</h1>
     {{ form(formulaire) }}
-    <a class="btn btn-warning" href="{{ path("categories") }}">Retour à la liste </a>
+    <a class="btn btn-warning" href="{{ path("ardoises") }}">Retour à la liste </a>
 {% endblock %}

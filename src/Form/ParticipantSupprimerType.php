@@ -2,13 +2,13 @@
 
 namespace App\Form;
 
-use App\Entity\Ardoise;
+use App\Entity\Participant;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ArdoiseSupprimerType extends AbstractType
+class ParticipantSupprimerType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -20,7 +20,7 @@ class ArdoiseSupprimerType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Ardoise::class,
+            'data_class' => Participant::class,
         ]);
     }
 }

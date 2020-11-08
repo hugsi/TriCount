@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h1>Modifier une ardoise</h1>
+    <div class="contCart">
+        <div class="card-header">
+            Ajouter un participant
+        </div>
+      <div>
+          {{ form(formulaire) }}
+      </div>
+    </div>
+    {% for a in result %}
+        <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{ a.participant.nom }}</h5>
+            <a class="btn btn-sm btn-primary" href="{{ path("ardoises_transac",{"idJoin":a.id}) }}">Ajouter une dépense</a>
+        </div>
+        </div>
+    {% endfor %}
+    <style>
+        .contCart{
+            margin: 10px;
+            border: 2px solid black;
+        }
+    </style>
+{% endblock %}
