@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Ardoise;
 use App\Entity\Join;
 use App\Entity\Participant;
+use App\Entity\Transaction;
 use App\Form\AjouterTransacType;
 use App\Form\ArdoiseSupprimerType;
 use App\Form\ArdoiseType;
@@ -69,12 +70,15 @@ class ArdoisesController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(Join::class);
         $table = $repo->find($idJoin);
 
-        $form = $this->createForm(AjouterTransacType::class, $table);
+        $transaction = new Transaction();
+
+        $form = $this->createForm(AjouterTransacType::class, $transaction);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($table);
+            $em->persist($transaction);
+            $transaction->setAssoc($table);
             $em->flush();
             }
 
@@ -109,17 +113,18 @@ class ArdoisesController extends AbstractController
             $join->setArdoise($ardoise);
             $em->persist($join);
             $em->flush();
-            //return $this->redirectToRoute("ardoises_depenses" . $ardoise->getId());
         }
 
         $repo2 = $this->getDoctrine()->getRepository(Join::class);
         $assoc = $repo2->findBy(['ardoise' => $ardoise]);
+        $repo3 = $this->getDoctrine()->getRepository(Transaction::class);
+        $oui = $repo3->findBy(['assoc' => $assoc]);
 
         return $this->render("ardoises/modifier.html.twig", [
             "formulaire" => $form->createView(),
             "ardoise" => $ardoise,
-            "result" => $assoc
-
+            "result" => $assoc,
+            "ree" => $oui,
         ]);
 
 

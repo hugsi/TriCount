@@ -2,14 +2,15 @@
 
 {% block body %}
     <h1>Modifier une ardoise</h1>
-    <div class="contCart">
+    <div class="contHead">
         <div class="card-header">
             Ajouter un participant
         </div>
-      <div>
+      <div class="formulaire">
           {{ form(formulaire) }}
       </div>
     </div>
+        <div class="contCard">
     {% for a in result %}
         <div class="card" style="width: 18rem;">
         <div class="card-body">
@@ -18,10 +19,38 @@
         </div>
         </div>
     {% endfor %}
+        </div>
+    <div class="contList">
+    <ul class="list-group">
+        <li class="list-group-item active">Liste des dépenses :</li>
+    {% for i in ree %}
+        <li class="list-group-item">{{ i.assoc.participant.nom }} a depensé {{ i.valeur }}€ [{{ i.description }}]</li>
+    </ul>
+    {%  endfor %}
+    </div>
     <style>
-        .contCart{
+        .contHead{
+            display: flex;
+            flex-flow: column;
+            width: 20%;
             margin: 10px;
             border: 2px solid black;
+        }
+        .contCard{
+            display: flex;
+            flex-flow: row;
+            justify-content: space-between;
+            border: 2px solid black;
+        }
+        .contList{
+            display: flex;
+            margin: 10px;
+            border: 2px solid gray;
+            flex-flow: column;
+        }
+        .card{
+            border: 3px solid dodgerblue ;
+            margin: 5px;
         }
     </style>
 {% endblock %}
