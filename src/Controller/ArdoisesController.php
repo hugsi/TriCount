@@ -95,6 +95,9 @@ class ArdoisesController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(Ardoise::class);
         $ardoise = $repo->find($id);
 
+        $repo1 = $this->getDoctrine()->getRepository(Participant::class);
+        $participants = $repo1->findAll();
+
         $part = new Participant();
 
         //Création du fomulaire
@@ -116,15 +119,16 @@ class ArdoisesController extends AbstractController
         }
 
         $repo2 = $this->getDoctrine()->getRepository(Join::class);
-        $assoc = $repo2->findBy(['ardoise' => $ardoise]);
+        $joinArdoise = $repo2->findBy(['ardoise' => $ardoise]);
         $repo3 = $this->getDoctrine()->getRepository(Transaction::class);
-        $oui = $repo3->findBy(['assoc' => $assoc]);
+        $transaction = $repo3->findBy(['assoc' => $joinArdoise]);
 
         return $this->render("ardoises/modifier.html.twig", [
             "formulaire" => $form->createView(),
             "ardoise" => $ardoise,
-            "result" => $assoc,
-            "ree" => $oui,
+            "joinArdoise" => $joinArdoise,
+            "transaction" => $transaction,
+            "participants" => $participants
         ]);
 
 

@@ -1,56 +1,98 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <h1>Modifier une ardoise</h1>
+    <div class="titre">
+        <h1>MODIFIER UNE ARDOISE</h1>
+    </div>
     <div class="contHead">
         <div class="card-header">
-            Ajouter un participant
+            Créer un participant :
         </div>
-      <div class="formulaire">
-          {{ form(formulaire) }}
-      </div>
+        <div class="formulaire">
+            {{ form(formulaire) }}
+        </div>
     </div>
-        <div class="contCard">
-    {% for a in result %}
-        <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">{{ a.participant.nom }}</h5>
-            <a class="btn btn-sm btn-primary" href="{{ path("ardoises_transac",{"idJoin":a.id}) }}">Ajouter une dépense</a>
+
+    <div class="contHead2">
+        <div class="titreListe">
+            Liste des participants :
         </div>
-        </div>
-    {% endfor %}
-        </div>
+    </div>
+    <div class="contCard">
+        {% for a in joinArdoise %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ a.participant.nom }}</h5>
+                    <a class="btn btn-sm btn-primary" href="{{ path("ardoises_transac",{"idJoin":a.id}) }}">Ajouter une
+                        dépense</a>
+                    <a class="btn btn-sm btn-danger"
+                       href="{{ path("participant_supprimer",{"idPart":a.participant.id}) }}"><i
+                                class="fas fa-user-slash"></i></a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
     <div class="contList">
-    <ul class="list-group">
-        <li class="list-group-item active">Liste des dépenses :</li>
-    {% for i in ree %}
-        <li class="list-group-item">{{ i.assoc.participant.nom }} a depensé {{ i.valeur }}€ [{{ i.description }}]</li>
-    </ul>
-    {%  endfor %}
+        <ul class="list-group">
+            <li class="list-group-item active">Liste des dépenses :</li>
+            {% for t in transaction %}
+            {% if t.description is not null %}
+            <li class="list-group-item">{{ t.assoc.participant.nom }} a dépensé {{ t.valeur }}€ [{{ t.description }}]
+                {% else %}
+            <li class="list-group-item">{{ t.assoc.participant.nom }} a dépensé {{ t.valeur }}€ [Aucune description]
+                {% endif %}
+                <a class="btn btn-sm btn-danger">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </li>
+        </ul>
+        {% endfor %}
     </div>
     <style>
-        .contHead{
+        .titre {
+            display: flex;
+            justify-content: center;
+            color: antiquewhite;
+            padding: 15px;
+        }
+
+        .contHead {
             display: flex;
             flex-flow: column;
             width: 20%;
-            margin: 10px;
-            border: 2px solid black;
+            margin-left: auto;
+            margin-right: auto;
+            border: 2px solid dodgerblue;
+            border-radius: 7% 7%;
+            color: antiquewhite;
+            align-items: center;
         }
-        .contCard{
+
+        .contCard {
             display: flex;
-            flex-flow: row;
+            flex-wrap: wrap;
+            margin: 10px;
             justify-content: space-between;
-            border: 2px solid black;
+            align-content: center;
+
         }
-        .contList{
+
+        .contList {
             display: flex;
+            padding-top: 50px;
             margin: 10px;
-            border: 2px solid gray;
             flex-flow: column;
         }
-        .card{
-            border: 3px solid dodgerblue ;
+
+        .card {
+            border: 3px solid dodgerblue;
             margin: 5px;
+        }
+
+        .contHead2 {
+            color: antiquewhite;
+            margin-left: 15px;
+            padding-top: 50px;
         }
     </style>
 {% endblock %}

@@ -1,10 +1,20 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <h1>Ajouter une ardoise</h1>
-    {{ form(formulaire) }}
+    <div class="titre">
+        <h1>AJOUTER UNE ARDOISE</h1>
+    </div>
+    <div class="form" style="color: antiquewhite">
+        {{ form(formulaire) }}
+    </div>
+        <a class="btn btn-warning" href="{{ path("ardoises") }}">Retour à la liste !</a>
 
-
-
-    <a class="btn btn-warning" href="{{ path("ardoises") }}">&lt; retour à la liste </a>
+    <style>
+        .titre{
+            display: flex;
+            justify-content: center;
+            padding-top: 20px;
+            color: #eceff4;
+        }
+    </style>
 {% endblock %}

@@ -1,0 +1,7 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h1>Voulez-vous vraiment supprimer le participant {{ participant.nom }} ?</h1>
+    {{ form(formulaire) }}
+    <a class="btn btn-warning" href="{{ path("ardoises") }}">Retour à la liste </a>
+{% endblock %}

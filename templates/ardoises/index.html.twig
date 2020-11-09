@@ -3,34 +3,59 @@
 {% block title %}TriCount{% endblock %}
 
 {% block body %}
-    <h1 class="titre">Liste des ardoises</h1>
+    <h1 class="titre">LISTE DES ARDOISES</h1>
     <table class="table">
-        <tr>
+        <tr class="titreTable">
             <th>Nom</th>
             <th>Description</th>
             <th>Actions</th>
         </tr>
 
         {% for a in ardoises %}
-        <tr style="border: 2px solid black">
-            <td style="background-color: cornflowerblue">{{ a.nom }}</td>
-            <td>{{ a.description }}</td>
-            <td>
-                <a class="btn btn-sm btn-warning" href="{{ path("ardoises_depenses",{"id":a.id}) }}">Accéder à l'ardoise</a>
-                <a class="btn btn-sm btn-primary" href="{{ path("ardoises_modifier",{"id":a.id}) }}">Modifier</a>
-                <a class="btn btn-sm btn-danger" href="{{ path("ardoises_supprimer",{"id":a.id}) }}">Supprimer</a>
-            </td>
-        </tr>
+            <tr style="border: 2px solid antiquewhite">
+                <td style="background-color: cornflowerblue">{{ a.nom }}</td>
+                {% if a.description is not null %}
+                    <td>{{ a.description }}</td>
+                {% else %}
+                    <td>[Aucune description]</td>
+                {% endif %}
+                <td>
+                    <a class="btn btn-sm btn-warning" href="{{ path("ardoises_depenses",{"id":a.id}) }}">Accéder à
+                        l'ardoise</a>
+                    <a class="btn btn-sm btn-primary" href="{{ path("ardoises_modifier",{"id":a.id}) }}">Modifier</a>
+                    <a class="btn btn-sm btn-danger" href="{{ path("ardoises_supprimer",{"id":a.id}) }}">Supprimer</a>
+                </td>
+            </tr>
         {% endfor %}
     </table>
-    <a class="btn btn-primary" href="{{ path("ardoises_ajouter") }}" style="margin-left: auto; margin-right: auto">Créer une ardoise</a>
-
+    <div class="butADD">
+        <a class="btn btn-primary" href="{{ path("ardoises_ajouter") }}" style="margin-left: auto; margin-right: auto">Créer
+            une ardoise</a>
+    </div>
     <style>
-        .titre{
+        .titre {
             display: flex;
             justify-content: center;
-            border: 2px solid black;
-            font-family: 'Itim', cursive;
+            color: antiquewhite;
+            padding-top: 7px;
+            padding-bottom: 7px;
+
+        }
+
+        .table {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-left: auto;
+            margin-right: auto;
+            width: auto;
+            color: antiquewhite;
+        }
+
+        .butADD {
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
         }
     </style>
 {% endblock %}
