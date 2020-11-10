@@ -63,10 +63,12 @@ class ArdoisesController extends AbstractController
             "formulaire" => $form->createView()
         ]);
     }
+
     /**
      * @Route ("/ardoises/transac/{idJoin}", name="ardoises_transac")
      */
-    public function transac($idJoin, Request $request){
+    public function transac($idJoin, Request $request)
+    {
         $repo = $this->getDoctrine()->getRepository(Join::class);
         $table = $repo->find($idJoin);
 
@@ -78,15 +80,16 @@ class ArdoisesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($transaction);
-            $transaction->setAssoc($table);
+            $transaction->setAssociation($table);
             $em->flush();
-            }
+        }
 
         return $this->render("ardoises/ajouterTransac.html.twig", [
             "formulaire" => $form->createView(),
         ]);
 
     }
+
     /**
      * @Route ("/ardoises/depenses/{id}", name="ardoises_depenses")
      */
@@ -121,14 +124,14 @@ class ArdoisesController extends AbstractController
         $repo2 = $this->getDoctrine()->getRepository(Join::class);
         $joinArdoise = $repo2->findBy(['ardoise' => $ardoise]);
         $repo3 = $this->getDoctrine()->getRepository(Transaction::class);
-        $transaction = $repo3->findBy(['assoc' => $joinArdoise]);
+        $transaction = $repo3->findBy(['association' => $joinArdoise]);
 
         return $this->render("ardoises/modifier.html.twig", [
             "formulaire" => $form->createView(),
             "ardoise" => $ardoise,
             "joinArdoise" => $joinArdoise,
             "transaction" => $transaction,
-            "participants" => $participants
+            "participants" => $participants,
         ]);
 
 

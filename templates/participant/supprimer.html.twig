@@ -1,7 +1,12 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <h1>Voulez-vous vraiment supprimer le participant {{ participant.nom }} ?</h1>
-    {{ form(formulaire) }}
-    <a class="btn btn-warning" href="{{ path("ardoises") }}">Retour à la liste </a>
+    <h1 style="color: #eceff4; padding: 15px; display:flex; justify-content: center">Voulez-vous vraiment supprimer le
+        participant {{ participant.nom }} ?</h1>
+    <div style="color: #eceff4; padding: 15px; display:flex; justify-content: center">
+        {{ form(formulaire) }}
+    </div>
+    <div style="color: #eceff4; padding: 15px; display:flex; justify-content: center">
+        <a class="btn btn-warning" href="{{ path("ardoises") }}">Retour à la liste </a>
+    </div>
 {% endblock %}

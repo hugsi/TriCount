@@ -37,11 +37,11 @@
             <li class="list-group-item active">Liste des dépenses :</li>
             {% for t in transaction %}
             {% if t.description is not null %}
-            <li class="list-group-item">{{ t.assoc.participant.nom }} a dépensé {{ t.valeur }}€ [{{ t.description }}]
+            <li class="list-group-item">{{ t.association.participant.nom }} a dépensé {{ t.valeur }}€ [{{ t.description }}]
                 {% else %}
-            <li class="list-group-item">{{ t.assoc.participant.nom }} a dépensé {{ t.valeur }}€ [Aucune description]
+            <li class="list-group-item">{{ t.association.participant.nom }} a dépensé {{ t.valeur }}€ [Aucune description]
                 {% endif %}
-                <a class="btn btn-sm btn-danger">
+                <a class="btn btn-sm btn-danger" href="{{ path("transaction_supprimer",{"idTransac":t.id}) }}">
                     <i class="fas fa-trash"></i>
                 </a>
             </li>
