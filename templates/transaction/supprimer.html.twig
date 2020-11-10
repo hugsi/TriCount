@@ -1,9 +1,19 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    {% if {{ transaction.description }} is not null %}
-    <h1>Voulez-vous vraiment supprimer la transaction de {{ transaction.association.participant.nom}} d'une valeur de {{ transaction.valeur }}€ pour [{{ transaction.description }}] ?</h1>
+    {% if transaction.description is not null %}
+        <h1 style="color: #eceff4; padding: 15px; display:flex; justify-content: center">Voulez-vous vraiment supprimer
+            la transaction de {{ transaction.association.participant.nom }} d'une valeur de {{ transaction.valeur }}€
+            pour [{{ transaction.description }}] ?</h1>
     {% else %}
-    {{ form(formulaire) }}
-    <a class="btn btn-warning" href="{{ path("ardoises") }}">Retour à la liste </a>
+        <h1 style="color: #eceff4; padding: 15px; display:flex; justify-content: center">Voulez-vous vraiment supprimer
+            la transaction de {{ transaction.association.participant.nom }} d'une valeur de {{ transaction.valeur }}€
+            pour [Aucune description] ?</h1>
+    {% endif %}
+    <div style="color: #eceff4; padding: 15px; display:flex; justify-content: center">
+        {{ form(formulaire) }}
+    </div>
+    <div style="color: #eceff4; padding: 15px; display:flex; justify-content: center">
+        <a class="btn btn-warning" href="{{ path("ardoises") }}">Retour à la liste </a>
+    </div>
 {% endblock %}
