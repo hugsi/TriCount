@@ -23,10 +23,10 @@
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">{{ a.participant.nom }}</h5>
-                    <a class="btn btn-sm btn-primary" href="{{ path("ardoises_transac",{"idJoin":a.id}) }}">Ajouter une
+                    <a class="btn btn-sm btn-primary" href="{{ path("ardoises_transac",{"idJoin":a.id},) }}">Ajouter une
                         dépense</a>
                     <a class="btn btn-sm btn-danger"
-                       href="{{ path("participant_supprimer",{"idPart":a.participant.id}) }}"><i
+                       href="{{ path("participant_supprimer",{"idPart":a.participant.id,"idArd":a.ardoise.id})}}"><i
                                 class="fas fa-user-slash"></i></a>
                 </div>
             </div>
@@ -43,6 +43,9 @@
                 {% endif %}
                 <a class="btn btn-sm btn-danger" href="{{ path("transaction_supprimer",{"idTransac":t.id}) }}">
                     <i class="fas fa-trash"></i>
+                </a>
+                <a class="btn btn-sm btn-warning" href="{{ path("transaction_modifier",{"idTransac":t.id}) }}">
+                    <i class="fas fa-pen"></i>
                 </a>
             </li>
         </ul>
@@ -72,7 +75,6 @@
             display: flex;
             flex-wrap: wrap;
             margin: 10px;
-            justify-content: space-between;
             align-content: center;
 
         }

@@ -2,9 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Ardoise;
+
 use App\Entity\Participant;
-use App\Form\ArdoiseSupprimerType;
 use App\Form\ParticipantSupprimerType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,9 +22,9 @@ class ParticipantController extends AbstractController
     }
 
     /**
-     * @Route("/ardoises/supprimer/participants/{idPart}", name="participant_supprimer")
+     * @Route("/ardoises/supprimer/participants/{idPart}/{idArd}", name="participant_supprimer")
      */
-    public function supprimer($idPart, Request $request)
+    public function supprimer($idPart, $idArd, Request $request)
     {
         //Initialiser le formulaire avec la bonne catégorie passée en parametre
         $repo = $this->getDoctrine()->getRepository(Participant::class);
@@ -47,7 +46,7 @@ class ParticipantController extends AbstractController
             $em->flush();
 
             //aller à la liste des catégories
-            return $this->redirectToRoute("ardoises_depenses");
+            return $this->redirectToRoute("ardoises");
         }
 
         return $this->render("participant/supprimer.html.twig", [
