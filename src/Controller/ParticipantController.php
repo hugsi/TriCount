@@ -47,7 +47,7 @@ class ParticipantController extends AbstractController
             $em->flush();
 
             //aller à la liste des catégories
-            return $this->redirectToRoute("ardoises");
+            return $this->redirectToRoute("ardoises_depenses");
         }
 
         return $this->render("participant/supprimer.html.twig", [
