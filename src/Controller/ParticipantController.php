@@ -22,9 +22,9 @@ class ParticipantController extends AbstractController
     }
 
     /**
-     * @Route("/ardoises/supprimer/participants/{idPart}/{idArd}", name="participant_supprimer")
+     * @Route("/ardoises/supprimer/participants/{idPart}", name="participant_supprimer")
      */
-    public function supprimer($idPart, $idArd, Request $request)
+    public function supprimer($idPart, Request $request)
     {
         //Initialiser le formulaire avec la bonne catégorie passée en parametre
         $repo = $this->getDoctrine()->getRepository(Participant::class);
