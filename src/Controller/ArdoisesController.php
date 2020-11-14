@@ -82,6 +82,8 @@ class ArdoisesController extends AbstractController
             $em->persist($transaction);
             $transaction->setAssociation($table);
             $em->flush();
+
+            return $this->redirectToRoute("ardoises_depenses", ["id" => $transaction->getAssociation()->getArdoise()->getId()]);
         }
 
         return $this->render("ardoises/ajouterTransac.html.twig", [
@@ -98,12 +100,8 @@ class ArdoisesController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(Ardoise::class);
         $ardoise = $repo->find($id);
 
-        $repo1 = $this->getDoctrine()->getRepository(Participant::class);
-        $participants = $repo1->findAll();
-
         $part = new Participant();
 
-        //Création du fomulaire
         $form = $this->createForm(ParticipantAjouterType::class, $part);
 
         //récupération du POST
@@ -125,13 +123,63 @@ class ArdoisesController extends AbstractController
         $joinArdoise = $repo2->findBy(['ardoise' => $ardoise]);
         $repo3 = $this->getDoctrine()->getRepository(Transaction::class);
         $transaction = $repo3->findBy(['association' => $joinArdoise]);
+        $idArd = $ardoise->getId();
+        $em = $this->getDoctrine()->getManager();
+        $sql =
+            "SELECT SUM(t.valeur) as sommeArdoise, count(DISTINCT j.participant_id) as total_participant
+        FROM `join` j
+        LEFT JOIN `transaction` t ON t.association_id = j.id
+        WHERE j.ardoise_id = $idArd";
+
+        $connection = $em->getConnection();
+        $cleanreq = $connection->prepare($sql);
+        $cleanreq->execute();
+        $result = $cleanreq->fetch();
+        $sommeArdoise = $result['sommeArdoise'];
+        $nbParticipant = $result['total_participant'];
+        do {
+            if ($nbParticipant == 0) {
+                break;
+            }
+        $moyenne = $sommeArdoise / $nbParticipant;
+        } while (0);
+
+
+        $sql2 =
+            "SELECT SUM(t.valeur) as sommeParticipant , p.nom as nom 
+FROM participant p JOIN `join` j ON j.participant_id = p.id 
+LEFT JOIN `transaction` t ON j.id = t.association_id
+WHERE j.ardoise_id = $idArd 
+GROUP BY j.participant_id";
+        $connection = $em->getConnection();
+        $cleanreq = $connection->prepare($sql2);
+        $cleanreq->execute();
+        $result2 = $cleanreq->fetchAll();
+
+        $participants = array(
+            'excedentaire' => array(),
+            'deficitaire' => array()
+        );
+        foreach ($result2 as $participant) {
+            $diff = $participant['sommeParticipant'] - $moyenne;
+            // tu checks si le participant doit des sous (excedentaire == false) ou si on lui en doit (excedentaire == true)
+            if ($diff <= 0) {
+                $participant['diff'] = abs($diff);
+                array_push($participants['deficitaire'], $participant);
+            } else {
+                $participant['diff'] = abs($diff);
+                array_push($participants['excedentaire'], $participant);
+            }
+        }
 
         return $this->render("ardoises/modifier.html.twig", [
             "formulaire" => $form->createView(),
             "ardoise" => $ardoise,
             "joinArdoise" => $joinArdoise,
             "transaction" => $transaction,
+            "sommeArdoise" => $sommeArdoise,
             "participants" => $participants,
+            "totalParticipant" => $result2
         ]);
 
 

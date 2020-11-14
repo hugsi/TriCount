@@ -45,8 +45,7 @@ class TransactionController extends AbstractController
             //générer l'update
             $em->flush();
 
-            //aller à la liste des catégories
-            return $this->redirectToRoute("ardoises");
+            return $this->redirectToRoute("ardoises_depenses",["id"=>$transaction->getAssociation()->getArdoise()->getId()]);
         }
 
         return $this->render("transaction/supprimer.html.twig", [
@@ -78,8 +77,8 @@ class TransactionController extends AbstractController
             //générer l'update
             $em->flush();
 
-            //aller à la liste des catégories
-            return $this->redirectToRoute("ardoises");
+
+            return $this->redirectToRoute("ardoises_depenses",["id"=>$transaction->getAssociation()->getArdoise()->getId()]);
         }
 
         return $this->render("transaction/modifier.html.twig", [

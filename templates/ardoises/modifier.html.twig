@@ -26,20 +26,37 @@
                     <a class="btn btn-sm btn-primary" href="{{ path("ardoises_transac",{"idJoin":a.id},) }}">Ajouter une
                         dépense</a>
                     <a class="btn btn-sm btn-danger"
-                       href="{{ path("participant_supprimer",{"idPart":a.participant.id,"idArd":a.ardoise.id})}}"><i
+                       href="{{ path("participant_supprimer",{"idPart":a.participant.id,"idArd":a.ardoise.id}) }}"><i
                                 class="fas fa-user-slash"></i></a>
                 </div>
             </div>
         {% endfor %}
     </div>
     <div class="contList">
+        <div class="alert alert-warning" role="alert" style="width: auto">
+            Total des dépenses de l'ardoise :
+            <div style="color: red">{{ sommeArdoise }}€</div>
+        </div>
+        <div style="padding-top: 50px">
+            <div class="alert alert-danger" role="alert" style="width: auto">
+                {% for excedentaire in participants['excedentaire'] %}
+                    {{ excedentaire['nom'] }} doit recevoir {{ excedentaire['diff']|round(2,'floor') }}€ de la part :<br>
+                    {% for deficitaire in participants['deficitaire'] %}
+                        de {{ deficitaire['nom'] }}  (au total {{ deficitaire['nom'] }} doit : {{ deficitaire['diff']|round(2,'floor') }}€)<br>
+                    {% endfor %}
+                    <br>
+                {% endfor %}
+            </div>
+        </div>
         <ul class="list-group">
             <li class="list-group-item active">Liste des dépenses :</li>
             {% for t in transaction %}
             {% if t.description is not null %}
-            <li class="list-group-item">{{ t.association.participant.nom }} a dépensé {{ t.valeur }}€ [{{ t.description }}]
+            <li class="list-group-item">{{ t.association.participant.nom }} a dépensé {{ t.valeur }}€
+                [{{ t.description }}]
                 {% else %}
-            <li class="list-group-item">{{ t.association.participant.nom }} a dépensé {{ t.valeur }}€ [Aucune description]
+            <li class="list-group-item">{{ t.association.participant.nom }} a dépensé {{ t.valeur }}€ [Aucune
+                description]
                 {% endif %}
                 <a class="btn btn-sm btn-danger" href="{{ path("transaction_supprimer",{"idTransac":t.id}) }}">
                     <i class="fas fa-trash"></i>
@@ -50,6 +67,7 @@
             </li>
         </ul>
         {% endfor %}
+
     </div>
     <style>
         .titre {
